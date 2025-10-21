@@ -4,13 +4,13 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "factorlab"
-version = "0.1.0"
-description = "Vibe coding exercise: factorial calculator with OOP patterns and full tooling."
+version = "0.2.0"
+description = "Factorial calculator with OOP patterns, CLI, tests, CI/CD, and docs."
 readme = "README.md"
 requires-python = ">=3.12"
 license = {text = "MIT"}
 authors = [{name = "Your Name"}]
-keywords = ["factorial", "math", "cli", "strategy", "oop"]
+keywords = ["factorial", "cli", "strategy", "oop"]
 classifiers = [
   "Programming Language :: Python :: 3",
   "Programming Language :: Python :: 3 :: Only",
@@ -31,17 +31,12 @@ line-length = 100
 target-version = "py312"
 
 [tool.ruff.lint]
-# Baseline centrado en errores reales y mejoras seguras.
-select = ["E", "F", "W", "I", "B", "UP"]
+select = ["E","F","W","I","B","UP"]
 ignore = []
 
 [tool.ruff.lint.per-file-ignores]
-# Tests: permitir asserts, docstrings ausentes, etc.
-"tests/**" = ["S101", "D"]
-# Paquetes: permitir docstring de paquete ausente.
+"tests/**" = ["S101","D"]
 "src/**/__init__.py" = ["D104"]
-
-
 
 [tool.mypy]
 python_version = "3.12"

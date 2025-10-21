@@ -5,7 +5,6 @@ from factorlab.cli import build_parser, configure_logging, run_from_args
 
 
 def test_configure_logging_levels():
-    # Just ensure no exceptions and code paths are executed
     configure_logging(0)
     configure_logging(1)
     configure_logging(2)
@@ -17,7 +16,7 @@ def test_build_parser_has_subcommands():
     assert "calc" in help_text and "validate" in help_text and "bench" in help_text
 
 
-def test_run_from_args_calc_n_text(monkeypatch, capsys):
+def test_run_from_args_calc_n_text(capsys):
     code = run_from_args(["calc", "--n", "6"])
     assert code == 0
     out = capsys.readouterr().out
@@ -38,14 +37,6 @@ def test_run_from_args_calc_stdin_invalid(monkeypatch, capsys, caplog):
     assert ("inválida" in err or "inválido" in err) or ("inválida" in text or "inválido" in text)
 
 
-def test_run_from_args_calc_stdin_ok_csv(monkeypatch, capsys):
-    monkeypatch.setattr(sys, "stdin", io.StringIO("3 4"))
-    code = run_from_args(["calc", "--format", "csv"])
-    assert code == 0
-    out = capsys.readouterr().out
-    assert "3,6" in out and "4,24" in out
-
-
 def test_run_from_args_calc_input_missing(capsys, caplog):
     import logging
 
@@ -56,6 +47,14 @@ def test_run_from_args_calc_input_missing(capsys, caplog):
     err = streams.err
     text = caplog.text
     assert "No se pudo abrir" in err or "No se pudo abrir" in text
+
+
+def test_run_from_args_calc_stdin_ok_csv(monkeypatch, capsys):
+    monkeypatch.setattr(sys, "stdin", io.StringIO("3 4"))
+    code = run_from_args(["calc", "--format", "csv"])
+    assert code == 0
+    out = capsys.readouterr().out
+    assert "3,6" in out and "4,24" in out
 
 
 def test_run_from_args_calc_output_file(tmp_path):

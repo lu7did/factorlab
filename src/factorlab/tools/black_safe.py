@@ -1,9 +1,4 @@
-"""Black wrapper that runs in *fast* mode using the API to avoid the 3.12.5 AST guard.
-
-Usage:
-    python -m factorlab.tools.black_safe [paths...]
-If no paths are given, defaults to the repo root (.).
-"""
+"""Black wrapper that runs in fast mode using the API to avoid 3.12.5 AST guard."""
 
 from __future__ import annotations
 
@@ -12,11 +7,10 @@ from collections.abc import Iterable
 from pathlib import Path
 
 try:
-    # Import Black's programmatic API
     import black
 except Exception:  # pragma: no cover
     print("ERROR: black is not installed. Please `pip install black`.", file=sys.stderr)
-    sys.exit(2)
+    raise
 
 
 def iter_python_files(paths: Iterable[Path]) -> Iterable[Path]:
@@ -41,12 +35,11 @@ def main(argv: list[str]) -> int:
         try:
             black.format_file_in_place(
                 src=py,
-                fast=True,  # <---- critical: skip AST equivalence checks
+                fast=True,
                 mode=mode,
                 write_back=write_back,
             )
         except Exception as exc:
-            # Downgrade errors to warnings to avoid make failure on 3.12.5 issue
             print(f"WARNING: Black failed on {py}: {exc}", file=sys.stderr)
     return 0
 

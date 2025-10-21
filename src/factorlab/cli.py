@@ -14,15 +14,16 @@ LOG = logging.getLogger("factorlab")
 
 
 def _err(message: str, bucket: list[str] | None = None) -> None:
-    """Emit a message to stderr (always flushed), log it, and store it in bucket."""
+    """Emit a message to stderr and log it as error (always flushed)."""
     if bucket is not None:
         bucket.append(message)
     try:
         sys.stderr.write(message + "\n")
         sys.stderr.flush()
-    except Exception:  # pragma: no cover
-        pass
+    except Exception as e:  # pragma: no cover
+        LOG.debug("stderr write failed: %s", e)
     print(message, file=sys.stderr, flush=True)
+    print(message, flush=True)
     LOG.error(message)
 
 
@@ -202,15 +203,13 @@ def run_from_args(argv: list[str]) -> int:
         LOG.exception("Fallo inesperado")
         rc = 1
 
-    # Final guard: if any error occurred but nothing made it to stderr for some reason,
-    # print the concatenated messages once more.
     if rc != 0 and errors:
         joined = " | ".join(errors)
         try:
             sys.stderr.write(joined + "\n")
             sys.stderr.flush()
-        except Exception:  # pragma: no cover
-            pass
+        except Exception as e:  # pragma: no cover
+            LOG.debug("stderr final write failed: %s", e)
         print(joined, file=sys.stderr, flush=True)
 
     return rc

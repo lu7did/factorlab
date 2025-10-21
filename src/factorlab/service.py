@@ -8,12 +8,7 @@ from dataclasses import dataclass
 from typing import Literal
 
 from .exceptions import ComputationError, ValidationError
-from .strategies import (
-    IterativeStrategy,
-    MathProdStrategy,
-    RecursiveStrategy,
-    Strategy,
-)
+from .strategies import IterativeStrategy, MathProdStrategy, RecursiveStrategy, Strategy
 
 OutputFormat = Literal["text", "json", "csv"]
 MethodName = Literal["iterative", "recursive", "math"]
@@ -101,11 +96,6 @@ class FactorialService:
             val = self.factorial(n)
             elapsed = time.perf_counter() - t0
             data.append(
-                {
-                    "n": n,
-                    "digits": len(str(val)),
-                    "seconds": elapsed,
-                    "method": self.config.method,
-                }
+                {"n": n, "digits": len(str(val)), "seconds": elapsed, "method": self.config.method}
             )
         return data
