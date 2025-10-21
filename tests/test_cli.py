@@ -14,15 +14,16 @@ def run_cli(args, input_text=""):
     return proc.returncode, proc.stdout.decode(), proc.stderr.decode()
 
 
-def test_cli_lists_ops_help():
-    code, out, err = run_cli(["--help"])
+def test_cli_calc_n_text():
+    code, out, err = run_cli(["calc", "--n", "5"])
     assert code == 0
-    assert "factorlab" in out
+    assert "5! = 120" in out
 
 
-def test_cli_simple_op_from_stdin():
+def test_cli_calc_stdin_csv():
     code, out, err = run_cli(["calc", "--format", "csv"], input_text="3 4")
-    assert code == 0 and "3,6" in out and "4,24" in out
+    assert code == 0
+    assert "3,6" in out and "4,24" in out
 
 
 def test_cli_validate():

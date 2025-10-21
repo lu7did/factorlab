@@ -1,4 +1,6 @@
-"""factorlab package initialization."""
+"""
+factorlab package initialization.
+"""
 
 from .exceptions import ComputationError, FactorlabError, ValidationError
 from .service import Config, FactorialService

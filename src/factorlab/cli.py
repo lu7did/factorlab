@@ -14,7 +14,7 @@ LOG = logging.getLogger("factorlab")
 
 
 def _err(message: str, bucket: list[str] | None = None) -> None:
-    """Emit a message to stderr and log it as error (always flushed)."""
+    """Emit a message to stderr (always flushed), log it, and store it in bucket."""
     if bucket is not None:
         bucket.append(message)
     try:
@@ -202,6 +202,8 @@ def run_from_args(argv: list[str]) -> int:
         LOG.exception("Fallo inesperado")
         rc = 1
 
+    # Final guard: if any error occurred but nothing made it to stderr for some reason,
+    # print the concatenated messages once more.
     if rc != 0 and errors:
         joined = " | ".join(errors)
         try:

@@ -12,4 +12,5 @@ def test_black_safe_runs_on_temp_dir(tmp_path):
         check=False,
         env=env,
     )
+    # Expect success (0) or warning-only; wrapper returns 0 even on internal warnings
     assert proc.returncode == 0
