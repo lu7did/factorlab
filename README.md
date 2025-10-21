@@ -68,3 +68,11 @@ make ci-lint
 
 
 > Nota: Bandit ahora usa configuración YAML en `.bandit` (antes `bandit.ini`).
+
+
+### Nota sobre `make: Warning: File 'Makefile' has modification time ... in the future`
+Esta advertencia es por *skew* de reloj en el filesystem. No afecta el build. Podés sincronizar timestamps con:
+```bash
+find . -type f -exec touch {} +
+```
+o simplemente ejecutar `make -B` (rebuild forzado) o hacer un commit limpio.
