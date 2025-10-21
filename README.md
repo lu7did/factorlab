@@ -55,6 +55,7 @@ Este repo incluye:
 ### GitHub Pages
 - Activar en *Settings → Pages* la rama `gh-pages`. Los cambios en `main` regeneran docs.
 
+
 ## Comandos útiles (local)
 ```bash
 make format
