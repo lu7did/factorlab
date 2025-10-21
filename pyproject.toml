@@ -1,0 +1,68 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "factorlab"
+version = "0.2.0"
+description = "Factorial calculator with OOP patterns, CLI, tests, CI/CD, and docs."
+readme = "README.md"
+requires-python = ">=3.12"
+license = {text = "MIT"}
+authors = [{name = "Your Name"}]
+keywords = ["factorial", "cli", "strategy", "oop"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.12",
+  "License :: OSI Approved :: MIT License",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+]
+
+[project.scripts]
+factorlab = "factorlab.__main__:main"
+
+[tool.black]
+line-length = 100
+target-version = ["py312"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E","F","W","I","B","UP"]
+ignore = []
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S101","D"]
+"src/**/__init__.py" = ["D104"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+warn_unused_ignores = true
+warn_redundant_casts = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+disallow_untyped_calls = false
+disallow_any_generics = true
+no_implicit_optional = true
+explicit_package_bases = true
+namespace_packages = true
+mypy_path = "src"
+exclude = ["tests"]
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+addopts = "-q --cov=factorlab --cov-report=term-missing"
+testpaths = ["tests"]
+
+[tool.coverage.run]
+branch = true
+source = ["factorlab"]
+parallel = true
+
+[tool.coverage.report]
+skip_empty = true
+show_missing = true
