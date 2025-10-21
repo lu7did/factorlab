@@ -1,5 +1,6 @@
 # factorlab
 
+
 **factorlab** calcula factoriales con buenas prácticas de ingeniería:
 
 - Python ≥ 3.12, layout `src/` (estilo cookiecutter).
